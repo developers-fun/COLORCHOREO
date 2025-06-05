@@ -12,7 +12,7 @@ const getShapeClassName = (shape) => {
     case 'blob':
       return 'rounded-[30%_70%_70%_30%/30%_30%_70%_70%]';
     default:
-      return 'rounded-lg';
+      return '';
   }
 };
 
@@ -67,7 +67,7 @@ function ShapePreview({ settings, colors }) {
   const borderStyle = {
     borderWidth: `${settings.borderWidth || 0}px`,
     borderStyle: settings.borderStyle || 'solid',
-    borderRadius: `${settings.borderRadius || 0}%`,
+    borderRadius: settings.borderRadius || '0%',
     borderColor: settings.borderColor || '#ffffff'
   };
 

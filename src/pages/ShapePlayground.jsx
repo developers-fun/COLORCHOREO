@@ -12,7 +12,7 @@ function ShapePlayground() {
     shape: 'square',
     borderWidth: 2,
     borderStyle: 'solid',
-    borderRadius: 10,
+    borderRadius: '10% 10% 10% 10%',
     borderColor: '#ffffff'
   });
 
