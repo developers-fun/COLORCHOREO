@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const getShapeClassName = (shape) => {
@@ -56,12 +56,20 @@ function ShapePreview({ settings, colors }) {
   const variants = getAnimationVariants(settings, colors);
   const shapeClass = getShapeClassName(settings.shape);
   
+  const gradient = useMemo(() => {
+    const stops = colors.map((color, index) => {
+      const percentage = (index / (colors.length - 1)) * 100;
+      return `${color} ${percentage}%`;
+    }).join(', ');
+    return `linear-gradient(135deg, ${stops})`;
+  }, [colors]);
+
   return (
     <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center p-8 mt-8">
       <motion.div
         className={`w-full h-full ${shapeClass}`}
         style={{
-          background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`,
+          background: gradient,
         }}
         animate="animate"
         variants={variants}
