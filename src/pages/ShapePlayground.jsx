@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ShapePreview from '../components/ShapePreview';
 import AnimationControls from '../components/AnimationControls';
+import BorderControls from '../components/BorderControls';
 
 function ShapePlayground() {
   const [settings, setSettings] = useState({
@@ -8,7 +9,11 @@ function ShapePlayground() {
     duration: 2,
     amplitude: 20,
     ease: 'easeInOut',
-    shape: 'square'
+    shape: 'square',
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderRadius: 10,
+    borderColor: '#ffffff'
   });
 
   const [colors] = useState(['#8B5CF6', '#10B981']);
@@ -16,9 +21,16 @@ function ShapePlayground() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-accent mb-6">Shape Playground</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
           <AnimationControls
+            settings={settings}
+            onUpdate={setSettings}
+          />
+        </div>
+        
+        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+          <BorderControls
             settings={settings}
             onUpdate={setSettings}
           />

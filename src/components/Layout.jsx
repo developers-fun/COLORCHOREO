@@ -5,10 +5,26 @@ function Layout({ children }) {
   const location = useLocation();
   
   const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Palette Builder', path: '/palette' },
-    { name: 'Shape Playground', path: '/shapes' },
-    { name: 'Articles', path: '/articles' }
+    { 
+      name: 'Home',
+      path: '/',
+      icon: '🎨'
+    },
+    { 
+      name: 'Palette Builder',
+      path: '/palette',
+      icon: '🎯'
+    },
+    { 
+      name: 'Shape Playground',
+      path: '/shapes',
+      icon: '⭐'
+    },
+    { 
+      name: 'Articles',
+      path: '/articles',
+      icon: '📚'
+    }
   ];
 
   return (
@@ -16,21 +32,23 @@ function Layout({ children }) {
       <header className="border-b border-gray-800">
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold text-primary">
-              Color Choreographer
+            <Link to="/" className="text-2xl font-bold text-primary flex items-center gap-2">
+              <span className="text-3xl">🎨</span>
+              <span>Color Choreographer</span>
             </Link>
             <div className="flex gap-6">
               {navigation.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-colors ${
+                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
                     location.pathname === item.path
                       ? 'text-accent'
                       : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
-                  {item.name}
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="hidden md:inline">{item.name}</span>
                 </Link>
               ))}
             </div>

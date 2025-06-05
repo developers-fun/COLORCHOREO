@@ -64,12 +64,20 @@ function ShapePreview({ settings, colors }) {
     return `linear-gradient(135deg, ${stops})`;
   }, [colors]);
 
+  const borderStyle = {
+    borderWidth: `${settings.borderWidth || 0}px`,
+    borderStyle: settings.borderStyle || 'solid',
+    borderRadius: `${settings.borderRadius || 0}%`,
+    borderColor: settings.borderColor || '#ffffff'
+  };
+
   return (
     <div className="aspect-square bg-gray-700 rounded-lg flex items-center justify-center p-8 mt-8">
       <motion.div
         className={`w-full h-full ${shapeClass}`}
         style={{
           background: gradient,
+          ...borderStyle
         }}
         animate="animate"
         variants={variants}
