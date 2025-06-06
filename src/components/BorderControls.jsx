@@ -54,6 +54,16 @@ function BorderControls({ settings, onUpdate }) {
     }
   }, [isDragging]);
 
+  const cssCode = `
+.fancy-border {
+  width: 200px;
+  height: 200px;
+  border-width: ${settings.borderWidth}px;
+  border-style: ${settings.borderStyle};
+  border-color: ${settings.borderColor};
+  border-radius: ${points.top}% ${100 - points.top}% ${points.bottom}% ${100 - points.bottom}% / ${100 - points.left}% ${100 - points.right}% ${points.right}% ${points.left}%;
+}`.trim();
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-gray-300">Border Settings</h3>
@@ -90,7 +100,7 @@ function BorderControls({ settings, onUpdate }) {
           <label className="text-sm text-gray-300">Fancy Border Radius</label>
           <div 
             ref={containerRef}
-            className="h-64 bg-gray-700 rounded relative p-4"
+            className="aspect-square bg-gray-700 rounded relative p-4"
           >
             <div 
               className="w-full h-full bg-gray-600"
@@ -131,9 +141,6 @@ function BorderControls({ settings, onUpdate }) {
               onMouseDown={() => handleMouseDown('left')}
             />
           </div>
-          <div className="text-sm text-gray-400 mt-2 break-all">
-            border-radius: {`${points.top}% ${100 - points.top}% ${points.bottom}% ${100 - points.bottom}% / ${100 - points.left}% ${100 - points.right}% ${points.right}% ${points.left}%`}
-          </div>
         </div>
 
         <div className="space-y-2">
@@ -144,6 +151,13 @@ function BorderControls({ settings, onUpdate }) {
             onChange={(e) => onUpdate({ ...settings, borderColor: e.target.value })}
             className="w-full h-10 bg-gray-700 rounded"
           />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm text-gray-300">CSS Code</label>
+          <pre className="bg-gray-900 p-4 rounded-lg overflow-x-auto text-sm">
+            <code>{cssCode}</code>
+          </pre>
         </div>
       </div>
     </div>
