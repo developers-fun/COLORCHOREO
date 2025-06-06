@@ -4,10 +4,14 @@ function BorderControls({ settings, onUpdate }) {
   const [isDragging, setIsDragging] = useState(null);
   const containerRef = useRef(null);
   const [corners, setCorners] = useState({
-    topLeft: settings.borderRadius || 0,
-    topRight: settings.borderRadius || 0,
-    bottomRight: settings.borderRadius || 0,
-    bottomLeft: settings.borderRadius || 0
+    topLeftX: 50,
+    topLeftY: 50,
+    topRightX: 50,
+    topRightY: 50,
+    bottomRightX: 50,
+    bottomRightY: 50,
+    bottomLeftX: 50,
+    bottomLeftY: 50
   });
 
   const handleMouseDown = (corner) => {
@@ -19,15 +23,18 @@ function BorderControls({ settings, onUpdate }) {
     
     const rect = containerRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
     
     setCorners(prev => ({
       ...prev,
-      [isDragging]: Math.round(x)
+      [isDragging]: isDragging.endsWith('X') ? x : y
     }));
 
+    const borderRadius = `${corners.topLeftX}% ${100-corners.topRightX}% ${corners.bottomRightX}% ${100-corners.bottomLeftX}% / ${corners.topLeftY}% ${corners.topRightY}% ${100-corners.bottomRightY}% ${100-corners.bottomLeftY}%`;
+    
     onUpdate({
       ...settings,
-      borderRadius: `${corners.topLeft}% ${corners.topRight}% ${corners.bottomRight}% ${corners.bottomLeft}%`
+      borderRadius
     });
   };
 
@@ -79,46 +86,68 @@ function BorderControls({ settings, onUpdate }) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm text-gray-300">Border Radius</label>
+          <label className="text-sm text-gray-300">Fancy Border Radius</label>
           <div 
             ref={containerRef}
-            className="h-40 bg-gray-700 rounded relative p-4"
+            className="h-64 bg-gray-700 rounded relative p-4"
           >
-            {/* Visual representation of the shape */}
             <div 
               className="w-full h-full bg-gray-600"
               style={{
-                borderRadius: `${corners.topLeft}% ${corners.topRight}% ${corners.bottomRight}% ${corners.bottomLeft}%`
+                borderRadius: `${corners.topLeftX}% ${100-corners.topRightX}% ${corners.bottomRightX}% ${100-corners.bottomLeftX}% / ${corners.topLeftY}% ${corners.topRightY}% ${100-corners.bottomRightY}% ${100-corners.bottomLeftY}%`
               }}
             />
             
-            {/* Interactive dots */}
+            {/* Top Left Controls */}
             <div
-              className={`absolute top-4 left-4 w-4 h-4 bg-primary rounded-full cursor-pointer ${isDragging === 'topLeft' ? 'scale-125' : ''}`}
-              onMouseDown={() => handleMouseDown('topLeft')}
+              className={`absolute top-0 left-[${corners.topLeftX}%] w-4 h-4 bg-primary rounded-full cursor-ns-resize ${isDragging === 'topLeftY' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('topLeftY')}
               style={{ transform: `translate(-50%, -50%)` }}
             />
             <div
-              className={`absolute top-4 right-4 w-4 h-4 bg-primary rounded-full cursor-pointer ${isDragging === 'topRight' ? 'scale-125' : ''}`}
-              onMouseDown={() => handleMouseDown('topRight')}
+              className={`absolute top-[${corners.topLeftY}%] left-0 w-4 h-4 bg-primary rounded-full cursor-ew-resize ${isDragging === 'topLeftX' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('topLeftX')}
+              style={{ transform: `translate(-50%, -50%)` }}
+            />
+
+            {/* Top Right Controls */}
+            <div
+              className={`absolute top-0 right-[${corners.topRightX}%] w-4 h-4 bg-primary rounded-full cursor-ns-resize ${isDragging === 'topRightY' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('topRightY')}
               style={{ transform: `translate(50%, -50%)` }}
             />
             <div
-              className={`absolute bottom-4 right-4 w-4 h-4 bg-primary rounded-full cursor-pointer ${isDragging === 'bottomRight' ? 'scale-125' : ''}`}
-              onMouseDown={() => handleMouseDown('bottomRight')}
+              className={`absolute top-[${corners.topRightY}%] right-0 w-4 h-4 bg-primary rounded-full cursor-ew-resize ${isDragging === 'topRightX' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('topRightX')}
+              style={{ transform: `translate(50%, -50%)` }}
+            />
+
+            {/* Bottom Right Controls */}
+            <div
+              className={`absolute bottom-0 right-[${corners.bottomRightX}%] w-4 h-4 bg-primary rounded-full cursor-ns-resize ${isDragging === 'bottomRightY' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('bottomRightY')}
               style={{ transform: `translate(50%, 50%)` }}
             />
             <div
-              className={`absolute bottom-4 left-4 w-4 h-4 bg-primary rounded-full cursor-pointer ${isDragging === 'bottomLeft' ? 'scale-125' : ''}`}
-              onMouseDown={() => handleMouseDown('bottomLeft')}
+              className={`absolute bottom-[${corners.bottomRightY}%] right-0 w-4 h-4 bg-primary rounded-full cursor-ew-resize ${isDragging === 'bottomRightX' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('bottomRightX')}
+              style={{ transform: `translate(50%, 50%)` }}
+            />
+
+            {/* Bottom Left Controls */}
+            <div
+              className={`absolute bottom-0 left-[${corners.bottomLeftX}%] w-4 h-4 bg-primary rounded-full cursor-ns-resize ${isDragging === 'bottomLeftY' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('bottomLeftY')}
+              style={{ transform: `translate(-50%, 50%)` }}
+            />
+            <div
+              className={`absolute bottom-[${corners.bottomLeftY}%] left-0 w-4 h-4 bg-primary rounded-full cursor-ew-resize ${isDragging === 'bottomLeftX' ? 'scale-125' : ''}`}
+              onMouseDown={() => handleMouseDown('bottomLeftX')}
               style={{ transform: `translate(-50%, 50%)` }}
             />
           </div>
-          <div className="grid grid-cols-4 gap-2 mt-2">
-            <span className="text-sm text-gray-400 text-center">{corners.topLeft}%</span>
-            <span className="text-sm text-gray-400 text-center">{corners.topRight}%</span>
-            <span className="text-sm text-gray-400 text-center">{corners.bottomRight}%</span>
-            <span className="text-sm text-gray-400 text-center">{corners.bottomLeft}%</span>
+          <div className="text-sm text-gray-400 mt-2">
+            border-radius: {`${corners.topLeftX}% ${100-corners.topRightX}% ${corners.bottomRightX}% ${100-corners.bottomLeftX}% / ${corners.topLeftY}% ${corners.topRightY}% ${100-corners.bottomRightY}% ${100-corners.bottomLeftY}%`}
           </div>
         </div>
 
