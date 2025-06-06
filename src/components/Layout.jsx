@@ -12,12 +12,12 @@ function Layout({ children }) {
     },
     { 
       name: 'Palette Builder',
-      path: '/palette',
+      path: '/tools/palette',
       icon: '🎯'
     },
     { 
       name: 'Shape Playground',
-      path: '/shapes',
+      path: '/tools/shapes',
       icon: '⭐'
     },
     { 
@@ -78,7 +78,7 @@ function Layout({ children }) {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/shapes" className="text-gray-400 hover:text-gray-200">
+                  <Link to="/tools/shapes" className="text-gray-400 hover:text-gray-200">
                     Shape Library
                   </Link>
                 </li>

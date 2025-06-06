@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import PaletteBuilder from './pages/PaletteBuilder';
 import ShapePlayground from './pages/ShapePlayground';
 import Articles from './pages/Articles';
+import ArticleDetail from './pages/ArticleDetail';
 
 function App() {
   return (
@@ -24,9 +25,14 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/palette" element={<PaletteBuilder />} />
-          <Route path="/shapes" element={<ShapePlayground />} />
-          <Route path="/articles" element={<Articles />} />
+          <Route path="/tools">
+            <Route path="palette" element={<PaletteBuilder />} />
+            <Route path="shapes" element={<ShapePlayground />} />
+          </Route>
+          <Route path="/articles">
+            <Route index element={<Articles />} />
+            <Route path=":slug" element={<ArticleDetail />} />
+          </Route>
         </Routes>
       </Layout>
     </>

@@ -26,13 +26,13 @@ function Home() {
         </p>
         <div className="mt-8 flex gap-4 justify-center">
           <Link
-            to="/palette"
+            to="/tools/palette"
             className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
           >
             Create Palette
           </Link>
           <Link
-            to="/shapes"
+            to="/tools/shapes"
             className="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors"
           >
             Explore Shapes
